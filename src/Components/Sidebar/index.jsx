@@ -14,67 +14,70 @@ import tom from '../../assets/tom.png'
 import megan from '../../assets/megan.png'
 import cameron from '../../assets/cameron.png'
 
-const Sidebar = () => {
+const Sidebar = ({sidebar}) => {
   return (
-    <div className='sidebar'>
-      <div className="sortcut-links">
-        <div className='side-links'>
-          <img src={home} alt="" />
+    <div className={`sidebar ${sidebar ? '' :'small-sidebar'}`}>
+      <div className="shortcut-links">
+        <div className='side-link'>
+          <img src={home} />
           <p>Home</p>
         </div>
-        <div className='side-links'>
-          <img src={game_icon} alt="" />
+        <div className='side-link'>
+          <img src={game_icon} />
           <p>Gaming</p>
         </div>
-        <div className='side-links'>
-          <img src={automobiles} alt="" />
+        <div className='side-link'>
+          <img src={automobiles} />
           <p>Automobiles</p>
         </div>
-        <div className='side-links'>
-          <img src={sports} alt="" />
+        <div className='side-link'>
+          <img src={sports} />
           <p>Sports</p>
         </div>
-        <div className='side-links'>
-          <img src={entertainment} alt="" />
+        <div className='side-link'>
+          <img src={entertainment} />
           <p>Entertainment</p>
         </div>
-        <div className='side-links'>
-          <img src={tech} alt="" />
+        <div className='side-link'>
+          <img src={tech} />
           <p>Technology</p>
         </div>
-        <div className='side-links'>
-          <img src={music} alt="" />
+        <div className='side-link'>
+          <img src={music} />
           <p>Music</p>
         </div>
-        <div className='side-links'>
-          <img src={blogs} alt="" />
+        <div className='side-link'>
+          <img src={blogs} />
           <p>Blogs</p>
         </div>
-        <div className='side-links'>
-          <img src={news} alt="" />
+        <div className='side-link'>
+          <img src={news} />
           <p>News</p>
         </div>
-        <div className='side-links'>
-          <img src={jack} alt="" />
-          <p>Jack</p>
-        </div>
-        <div className='side-links'>
-          <img src={simon} alt="" />
-          <p>Simon</p>
-        </div>
-        <div className='side-links'>
-          <img src={tom} alt="" />
-          <p>Tom</p>
-        </div>
-        <div className='side-links'>
-          <img src={megan} alt="" />
-          <p>Megan</p>
-        </div>
-        <div className='side-links'>
-          <img src={cameron} alt="" />
-          <p>Cameron</p>
-        </div>
         <hr />
+      </div>
+      <div className="subscribed-list">
+        <h3>Subscribed</h3>
+        <div className='side-link'>
+          <img src={jack} />
+          <p>PewDiePie</p>
+        </div>
+        <div className='side-link'>
+          <img src={simon} />
+          <p>MrBeast</p>
+        </div>
+        <div className='side-link'>
+          <img src={tom} />
+          <p>Justin Bieber</p>
+        </div>
+        <div className='side-link'>
+          <img src={megan} />
+          <p>5-Minute Crafts</p>
+        </div>
+        <div className='side-link'>
+          <img src={cameron} />
+          <p>Nas Daily</p>
+        </div>
       </div>
 
     </div>
