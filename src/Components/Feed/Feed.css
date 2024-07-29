@@ -25,3 +25,49 @@
 .card p{
     font-size: 14px;
 }
+
+
+/* ===================== */
+
+
+/* Tablet ve daha küçük ekranlar için */
+@media (max-width: 768px) {
+    .feed {
+        grid-template-columns: repeat(1,1fr);
+        column-gap: 12px;
+        row-gap: 25px;
+    }
+
+    .card h2 {
+        font-size: 13px;
+    }
+
+    .card h3 {
+        font-size: 11px;
+    }
+
+    .card p {
+        font-size: 10px;
+    }
+}
+
+/* Mobil ve daha küçük ekranlar için */
+@media (max-width: 480px) {
+    .feed {
+        grid-template-columns: 1fr;
+        column-gap: 10px;
+        row-gap: 20px;
+    }
+
+    .card h2 {
+        font-size: 14px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
+}
