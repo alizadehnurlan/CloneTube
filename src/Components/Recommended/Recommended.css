@@ -23,3 +23,11 @@
 }
 
 /* AIzaSyCRUNjrsrnP_xo3tm3GAfSb1jsyw0lij5E */
+
+
+@media (max-width:900px) {
+   .recommended{
+    flex-basis: 100%;
+   }
+   
+}

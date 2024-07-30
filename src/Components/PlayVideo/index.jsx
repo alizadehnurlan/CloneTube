@@ -10,20 +10,41 @@ import { useEffect, useState } from 'react'
 import { API_KEY } from "../../Data/data"
 import { value_converter } from "../../Data/data"
 import moment from 'moment'
+import { useParams } from 'react-router-dom'
 
-const PlayVideo = ({ videoId }) => {
+const PlayVideo = () => {
+  const {videoId}=useParams()
   const [apiData, setApiData] = useState(null)
 
-  console.log(apiData)
+  const [channelData, setchannelData] = useState(null)
+  const [commentData, setcommentData] = useState([])
+
+  const fetchOtherData = async () => {
+    const channelData_url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${apiData.snippet.channelId}&key=${API_KEY}`
+
+    await
+      fetch(channelData_url).then(res => res.json()).then(data => setchannelData(data.items[0]))
+
+    const comment_url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&videoId=${videoId}&key=${API_KEY}`
+
+    await fetch(comment_url).then(res => res.json()).then(data => setcommentData(data.items))
+
+  }
+
+
   const fetchVideoData = async () => {
-    const videoDetailsUrl = ` https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
+    const videoDetailsUrl = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
 
     await fetch(videoDetailsUrl).then(res => res.json()).then(data => setApiData(data.items[0]))
   }
 
   useEffect(() => {
     fetchVideoData()
-  }, [])
+  }, [videoId])
+
+  useEffect(() => {
+    fetchOtherData()
+  }, [apiData])
 
   return (
     <div className='play-video'>
@@ -41,82 +62,34 @@ const PlayVideo = ({ videoId }) => {
       </div>
       <hr />
       <div className="publisher">
-        <img src={jack} />
+        <img src={channelData ? channelData.snippet.thumbnails.default.url : ""} />
         <div>
-          <p> {apiData ? apiData.snippet.channelTitle : ""}</p>
+          <p> {apiData ? apiData.snippet.channelTitle : "f"}</p>
           <span>1M Subscribers</span>
         </div>
         <button>Subscribe</button>
       </div>
       <div className="vid-description">
-        <p>{apiData ? apiData.snippet.description.slice(0,250) : "Description Here"}</p>
+        <p>{apiData ? apiData.snippet.description.slice(0, 250) : "Description Here"}</p>
         <hr />
         <h4>1{apiData ? apiData.statistics.commentCount : 130} Comments</h4>
-        <div className="comment">
-          <img src={user_profile} />
-          <div>
-            <h3>Jack Nicholson <span>1 day ago</span></h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium non eligendi, adipisci in atque praesentium ducimus minus animi dolorem nemo explicabo possimus incidunt temporibus voluptates quibusdam a at ipsum placeat?</p>
-            <div className="comment-action">
-              <img src={like} />
-              <span>245</span>
-              <img src={dislike} />
-              <p>18</p>
+        {commentData.map((item, i) => {
+          return (
+            <div key={i} className="comment">
+              <img src={item.snippet.topLevelComment.snippet.authorProfileImageUrl} />
+              <div>
+                <h3>{item.snippet.topLevelComment.snippet.authorDisplayName} <span>{moment(item.snippet.topLevelComment.snippet.publishedAt).fromNow()}</span></h3>
+                <p>{item.snippet.topLevelComment.snippet.textDisplay}</p>
+                <div className="comment-action">
+                  <img src={like} />
+                  <span>{value_converter(item.snippet.topLevelComment.snippet.likeCount)}</span>
+                  <img src={dislike} />
+                  <p></p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="comment">
-          <img src={user_profile} />
-          <div>
-            <h3>Jack Nicholson <span>1 day ago</span></h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium non eligendi, adipisci in atque praesentium ducimus minus animi dolorem nemo explicabo possimus incidunt temporibus voluptates quibusdam a at ipsum placeat?</p>
-            <div className="comment-action">
-              <img src={like} />
-              <span>245</span>
-              <img src={dislike} />
-              <p>18</p>
-            </div>
-          </div>
-        </div>
-        <div className="comment">
-          <img src={user_profile} />
-          <div>
-            <h3>Jack Nicholson <span>1 day ago</span></h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium non eligendi, adipisci in atque praesentium ducimus minus animi dolorem nemo explicabo possimus incidunt temporibus voluptates quibusdam a at ipsum placeat?</p>
-            <div className="comment-action">
-              <img src={like} />
-              <span>245</span>
-              <img src={dislike} />
-              <p>18</p>
-            </div>
-          </div>
-        </div>
-        <div className="comment">
-          <img src={user_profile} />
-          <div>
-            <h3>Jack Nicholson <span>1 day ago</span></h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium non eligendi, adipisci in atque praesentium ducimus minus animi dolorem nemo explicabo possimus incidunt temporibus voluptates quibusdam a at ipsum placeat?</p>
-            <div className="comment-action">
-              <img src={like} />
-              <span>245</span>
-              <img src={dislike} />
-              <p>18</p>
-            </div>
-          </div>
-        </div>
-        <div className="comment">
-          <img src={user_profile} />
-          <div>
-            <h3>Jack Nicholson <span>1 day ago</span></h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium non eligendi, adipisci in atque praesentium ducimus minus animi dolorem nemo explicabo possimus incidunt temporibus voluptates quibusdam a at ipsum placeat?</p>
-            <div className="comment-action">
-              <img src={like} />
-              <span>245</span>
-              <img src={dislike} />
-              <p>18</p>
-            </div>
-          </div>
-        </div>
+          )
+        })}
       </div>
     </div>
   )
